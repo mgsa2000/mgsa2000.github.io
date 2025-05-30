@@ -96,4 +96,5 @@ Y para visualizarlos abriremos un navegador e introduciremos la siguiente direcc
 
 ## generar la documentación
 Para generar los archivos HTML estaticos ejecutamos  
-docker run --rm -it -u $(id -u):$(id -g) -v "$PWD":/docs squidfunk/mkdocs-material build
+docker run --rm -it -u $(id -u):$(id -g) -v "$PWD":/docs squidfunk/mkdocs-material buil
+sd
