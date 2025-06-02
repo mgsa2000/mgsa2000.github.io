@@ -47,3 +47,4 @@ sudo certbot --apache -m $LE_EMAIL --agree-tos --no-eff-email -d $LE_DOMAIN --no
 ## comprobaciones.
 
 ![](/images/practica-1.5.png)
+s

@@ -28,8 +28,7 @@ Una vez hayamos creado el archivo mkdocs,lo editaremos para configurar nuestro s
 site_name: Miguel IAW
 nav:
     - Principal: index.md
-    - Practica 3.1: practica-3.1.md
-    - Practica 4.5: practica-4.5.md
+    - Practica 1.5: practica-1.5.md
 
 theme:
   name: material  
@@ -37,16 +36,16 @@ theme:
   palette:
     # Modo claro
     - scheme: default
-      primary: teal
-      accent: black
+      primary: pink
+      accent: yellow
       toggle:
         icon: material/toggle-switch
         name: Switch to dark mode
 
     # Modo oscuro
     - scheme: slate
-      primary: teal
-      accent: black
+      primary: cyan
+      accent: red
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to light mode
@@ -97,4 +96,65 @@ Y para visualizarlos abriremos un navegador e introduciremos la siguiente direcc
 ## generar la documentación
 Para generar los archivos HTML estaticos ejecutamos  
 docker run --rm -it -u $(id -u):$(id -g) -v "$PWD":/docs squidfunk/mkdocs-material buil
-sd
+![](imagenes/666.png)
+
+##  Publicar la documentación en GitHub Pages
+
+Publicamos en github a través del siguiente comando docker run --rm -it -v ~/.ssh:/root/.ssh -v "$PWD":/docs squidfunk/mkdocs-material gh-deploy
+
+el siguiente paso sera crear un workflow con  el siguiente contenido:
+````
+name: build-push-mkdocs
+
+# Eventos que desescandenan el workflow
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  # Job para crear la documentación de mkdocs
+  build:
+    # Indicamos que este job se ejecutará en una máquina virtual con la última versión de ubuntu
+    runs-on: ubuntu-latest
+    
+    # Definimos los pasos de este job
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install Python3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Mkdocs
+        run: |
+          pip install mkdocs
+          pip install mkdocs-material 
+
+      - name: Build MkDocs
+        run: |
+          mkdocs build
+
+      - name: Push the documentation in a branch
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages # The branch name where you want to push the assets
+          FOLDER: site # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "Build: ({sha}) {msg}" # The commit message
+
+````
+
+![](imagenes/777.png)
+
+
+Por último tendremos que configurar los permisos del workflow y marcar Read and write permissions.
+
+
+![](imagenes/888.png)
