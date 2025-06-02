@@ -9,8 +9,8 @@
       
       
       
+        <link rel="prev" href="index.html">
       
-        <link rel="next" href="practica-1.5.html">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -18,7 +18,7 @@
     
     
       
-        <title>Miguel IAW</title>
+        <title>Practica 1.5 - Miguel IAW</title>
       
     
     
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-mkdocs" class="md-skip">
+        <a href="#practica-15" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Principal
+              Practica 1.5
             
           </span>
         </div>
@@ -187,6 +187,28 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Principal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -204,7 +226,7 @@
   
   
   <span class="md-ellipsis">
-    Principal
+    Practica 1.5
     
   </span>
   
@@ -212,12 +234,12 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+      <a href="practica-1.5.html" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Principal
+    Practica 1.5
     
   </span>
   
@@ -240,18 +262,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#instalar-y-configurar-el-cliente-acme-certbot" class="md-nav__link">
     <span class="md-ellipsis">
-      Commands
+      Instalar y configurar el cliente ACME Certbot
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
+  <a href="#comprobaciones" class="md-nav__link">
     <span class="md-ellipsis">
-      Project layout
+      comprobaciones.
     </span>
   </a>
   
@@ -261,28 +283,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="practica-1.5.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Practica 1.5
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -314,18 +314,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#instalar-y-configurar-el-cliente-acme-certbot" class="md-nav__link">
     <span class="md-ellipsis">
-      Commands
+      Instalar y configurar el cliente ACME Certbot
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
+  <a href="#comprobaciones" class="md-nav__link">
     <span class="md-ellipsis">
-      Project layout
+      comprobaciones.
     </span>
   </a>
   
@@ -347,21 +347,34 @@
 
 
 
-<h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
-<ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
-</ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
+<h1 id="practica-15">practica-1.5</h1>
+<p>repo de la practica 1.5
+Para esta práctica vamos a realizar la configuración de un certificado lets Encrypt y usando Cerbot en apache.
+Para ello, usaremos nuestros scripts previamente realizado en prácticas anteriores como son : install lamp, intall-tool ,deploy....
+Por supesto,no olvidar que usaremos nuestra variables de entorno.</p>
+<p>El primer paso que vamos a realizar, será registrar un nombre de dominio en la página NO-IP</p>
+<p>Lo segundo será tirar el script de la pila lamp.</p>
+<h2 id="instalar-y-configurar-el-cliente-acme-certbot">Instalar y configurar el cliente ACME Certbot</h2>
+<pre><code class="language-bash">set -ex
 </code></pre>
+<p>Importamos el archivo de variables</p>
+<pre><code class="language-bash">source .env
+</code></pre>
+<p>Instalamos y actualizamos snap</p>
+<pre><code class="language-bash">snap install core
+snap refresh core
+</code></pre>
+<p>Eliminamos instalaciones previas de cerbot con apt</p>
+<pre><code class="language-bash">apt remove certbot -y
+</code></pre>
+<p>Instalamos Certbot</p>
+<pre><code class="language-bash">snap install --classic certbot
+</code></pre>
+<p>Solicitamos un cerficado a Let`s Encrypt</p>
+<pre><code class="language-bash">sudo certbot --apache -m $LE_EMAIL --agree-tos --no-eff-email -d $LE_DOMAIN --non-interactive
+</code></pre>
+<h2 id="comprobaciones">comprobaciones.</h2>
+<p><img alt="" src="/images/practica-1.5.png" /></p>
 
 
 
@@ -390,22 +403,22 @@ docs/
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
-        
           
-          <a href="practica-1.5.html" class="md-footer__link md-footer__link--next" aria-label="Next: Practica 1.5">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Practica 1.5
-              </div>
-            </div>
+          <a href="index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Principal">
             <div class="md-footer__button md-icon">
               
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Principal
+              </div>
             </div>
           </a>
+        
         
       </nav>
     
